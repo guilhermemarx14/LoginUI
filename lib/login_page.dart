@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_ui/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -62,7 +63,9 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, SlideRightRoute(page: HomePage()));
+        },
       ),
     );
 
@@ -96,4 +99,30 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget page;
+  SlideRightRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        );
 }
